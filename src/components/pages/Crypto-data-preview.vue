@@ -35,7 +35,6 @@ export default {
     },
     getUrlForIcon() {
       let result = this.getCryptoIcons.find(element => this.$route.params.id === element.asset_id)
-      console.log(result)
       return result && result.url ? result.url : ''
     }
   },

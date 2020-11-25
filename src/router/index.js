@@ -3,23 +3,33 @@ import Router from 'vue-router'
 
 import CurrenciesList from '../components/pages/Currencies-list'
 import CryptoDataPreview from '../components/pages/Crypto-data-preview'
+import Contact from '../components/pages/Contact-page'
 import ErrorPage from '../components/pages/Error'
 
-const routes = [
+export const routes = [
     {
         path: '/',
         name: 'CurrenciesList',
-        component: CurrenciesList
+        component: CurrenciesList,
+        label: 'Main Page'
     },
     {
         path: '/cryptoPreview/:id',
         name: 'CryptoDataPreview',
         component: CryptoDataPreview,
+        label: 'Crypto Preview'
+    },
+    {
+        path: '/contact',
+        name: 'Contact',
+        component: Contact,
+        label: 'Contact'
     },
     {
         path: '*',
         name: 'ErrorPage',
-        component: ErrorPage
+        component: ErrorPage,
+        label: 'Error Page'
     }
 ]
 

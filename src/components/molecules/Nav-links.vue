@@ -1,12 +1,29 @@
 <template>
-  <li :class="classFeature">
-    <router-link :to="{name: 'CurrenciesList'}">Main Page</router-link>
-  </li>
+  <div>
+    <li v-for="(link, index) in getAllNavLinks" :key="index"
+        :class="classFeature">
+      <router-link
+          :to="{name: link.name}">{{ link.label }}
+      </router-link>
+    </li>
+  </div>
 </template>
 
 <script>
+import {routes} from "@/router";
+
 export default {
   name: 'NavLinks',
+  computed: {
+    getAllNavLinks() {
+      return routes.filter(route => route.path !== '*' && route.path !== '/cryptoPreview/:id')
+          .map(filteredRoute => ({
+                name: filteredRoute.name,
+                label: filteredRoute.label
+              })
+          )
+    }
+  },
   props: {
     classFeature: {type: String, default: 'nav-item'}
   }
@@ -31,6 +48,7 @@ export default {
 
 .header-nav-item {
   margin: 0 10px;
+  display: inline-block;
 }
 
 .header-nav-item a {

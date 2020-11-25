@@ -1,11 +1,11 @@
 <template>
   <div class="crypto-preview" @click="HandleCryptoClick">
-      <div>
-        <div class="crypto-content">
-          <h1>Crypto currency name: {{ title }}</h1>
-          <p>Click me to get more information!</p>
-        </div>
+    <div>
+      <div class="crypto-content">
+        <h1>Crypto currency name: {{ title }}</h1>
+        <p>Click me to get more information!</p>
       </div>
+    </div>
   </div>
 </template>
 
@@ -24,15 +24,13 @@ export default {
       required: true
     }
   },
-  computed: {
-    postLink() {
-      return '/'
-    }
-  },
   methods: {
     ...mapActions('CryptoData', ['fetchSingleCryptoData']),
     HandleCryptoClick() {
-      this.fetchSingleCryptoData(`https://rest.coinapi.io/v1/exchangerate/${this.id}`)
+      this.fetchSingleCryptoData({
+        url1: `https://rest.coinapi.io/v1/exchangerate/${this.id}`,
+        url2: `https://rest.coinapi.io/v1/assets/icons/32`
+      })
           .then(() => {
             this.$router.push({path: `/cryptoPreview/${this.id}`})
           })

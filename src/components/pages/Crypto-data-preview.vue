@@ -5,12 +5,14 @@
       <div class="crypto-name">
         {{ getData }}
       </div>
+      <img :src="getUrlForIcon"/>
     </div>
     <div v-for="(singleData, index) in getSingleCryptoData" :key="index" class="single-crypto-rate-preview">
       <div>Actual rate in {{ singleData.asset_id_quote }}</div>
       <div>Rate value {{ singleData.rate }}</div>
       <div>Date when rate was set {{ singleData.time | formatDate }}</div>
     </div>
+    <HistoricalData/>
     <div class="go-to-main-page">
       <router-link to="/">Go to all Crypto preview</router-link>
     </div>
@@ -19,15 +21,22 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import HistoricalData from "@/components/organisms/Historical-data";
 
 export default {
   name: 'CryptoDataPreview',
+  components: {HistoricalData},
   computed: {
-    ...mapGetters('CryptoData', ['getSingleCryptoData', 'getNameById']),
+    ...mapGetters('CryptoData', ['getSingleCryptoData', 'getNameById', 'getCryptoIcons']),
     getData() {
       let result = this.getNameById(this.$route.params.id)
       return result && result.name ? result.name : ''
     },
+    getUrlForIcon() {
+      let result = this.getCryptoIcons.find(element => this.$route.params.id === element.asset_id)
+      console.log(result)
+      return result && result.url ? result.url : ''
+    }
   },
   filters: {
     formatDate(inputDate) {

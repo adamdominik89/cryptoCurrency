@@ -23,6 +23,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import HistoricalData from "@/components/organisms/Historical-data";
+import {months} from "@/macros/months";
 
 export default {
   name: 'CryptoDataPreview',
@@ -40,20 +41,6 @@ export default {
   },
   filters: {
     formatDate(inputDate) {
-      const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ];
       const date = new Date(inputDate);
       const year = date.getFullYear();
       const month = date.getMonth();

@@ -21,18 +21,34 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import HistoricalData from "@/components/organisms/Historical-data";
 import {months} from "@/macros/months";
 
 export default {
   name: 'CryptoDataPreview',
   components: {HistoricalData},
+  mounted() {
+    if (this.getCryptoIcons.length === 0) {
+      this.fetchCryptoData({
+        url1: `https://rest.coinapi.io/v1/exchangerate/${this.getId}`,
+        url2: `https://rest.coinapi.io/v1/assets/icons/32`,
+        url3: `https://rest.coinapi.io/v1/ohlcv/${this.getId}/USD/latest?period_id=1DAY`
+      })
+          .catch((error) => {
+            console.error(error)
+          })
+    }
+    //here we need to fetch data
+  },
   computed: {
     ...mapGetters('CryptoData', ['getSingleCryptoData', 'getNameById', 'getCryptoIcons']),
     getData() {
-      let result = this.getNameById(this.$route.params.id)
+      let result = this.getNameById(this.getId)
       return result && result.name ? result.name : ''
+    },
+    getId() {
+      return this.$route.params.id
     },
     getUrlForIcon() {
       let result = this.getCryptoIcons.find(element => this.$route.params.id === element.asset_id)
@@ -48,6 +64,9 @@ export default {
       const formattedDate = day + ". " + months[month] + " " + year;
       return formattedDate;
     }
+  },
+  methods: {
+    ...mapActions('CryptoData', ['fetchCryptoData'])
   }
 }
 

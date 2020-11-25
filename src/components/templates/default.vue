@@ -21,10 +21,10 @@ export default {
     TheSideNav
   },
   computed: {
-    ...mapGetters('Menu', ['getIsMenuOpen']),
+    ...mapGetters('UserInteraction', ['getIsMenuOpen']),
   },
   methods: {
-    ...mapMutations('Menu', ['setIsMenuOpen']),
+    ...mapMutations('UserInteraction', ['setIsMenuOpen']),
     handleToggle() {
       this.setIsMenuOpen(false)
     }

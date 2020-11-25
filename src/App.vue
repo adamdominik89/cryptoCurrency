@@ -19,6 +19,7 @@ export default {
     previousWidth: null
   }),
   mounted() {
+    this.setIsDataLoaded(false)
     this.fetchData('https://rest.coinapi.io/v1/exchanges')
         .then((result) => {
           this.setCryptoData(result)
@@ -28,19 +29,22 @@ export default {
         .catch((error) => {
           console.error(error)
         })
+    .finally(() => {
+      this.setIsDataLoaded(true)
+    })
     window.addEventListener('resize', this.handleMenuState);
   },
   destroyed() {
     window.removeEventListener('resize', this.handleMenuState);
   },
   computed: {
-    ...mapGetters('Menu', [
+    ...mapGetters('UserInteraction', [
       'getIsMenuOpen'
     ])
   },
   methods: {
     ...mapMutations('CryptoData', ['setCryptoData', 'setCryptoAssets']),
-    ...mapMutations('Menu', ['setIsMenuOpen']),
+    ...mapMutations('UserInteraction', ['setIsMenuOpen', 'setIsDataLoaded']),
     fetchData: async (url) => {
       return getRequest(url)
     },

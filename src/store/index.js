@@ -2,14 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import CryptoData from './modules/Crypto-data'
-import Menu from './modules/Menu'
+import UserInteraction from './modules/User-interaction'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
         CryptoData,
-        Menu
+        UserInteraction
         // namespace in store
     }
 })

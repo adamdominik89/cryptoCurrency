@@ -50,9 +50,16 @@ export default {
 <style>
 .historical-data-container {
   border: 1px solid red;
-  width: 400px;
+  width: 350px;
   margin: 20px auto 10px auto;
 }
+
+@media (min-width: 768px) {
+  .historical-data-container {
+    width: 400px;
+  }
+}
+
 .single-history-data-element {
   margin: 5px;
   border-top: 1px solid lightgray;

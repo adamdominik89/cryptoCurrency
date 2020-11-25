@@ -2,7 +2,8 @@
   <div>
       <CryptoCard v-for="cryptoCard in getDataToDisplay"
                   :key="cryptoCard.id"
-                  :title="cryptoCard.name"/>
+                  :title="cryptoCard.name"
+                  :id="cryptoCard.id"/>
   </div>
 </template>
 

@@ -1,17 +1,17 @@
 <template>
-  <div class="crypto-preview">
-    <router-link :to="postLink">
+  <div class="crypto-preview" @click="HandleCryptoClick">
       <div>
         <div class="crypto-content">
           <h1>Crypto currency name: {{ title }}</h1>
-          <p>Additional data</p>
+          <p>Click me to get more information!</p>
         </div>
       </div>
-    </router-link>
   </div>
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
 export default {
   name: 'CryptoCard',
   props: {
@@ -19,14 +19,30 @@ export default {
       type: String,
       default: ''
     },
+    id: {
+      type: String,
+      required: true
+    }
   },
   computed: {
     postLink() {
       return '/'
-    },
-
+    }
+  },
+  methods: {
+    ...mapActions('CryptoData', ['fetchSingleCryptoData']),
+    HandleCryptoClick() {
+      this.fetchSingleCryptoData(`https://rest.coinapi.io/v1/exchangerate/${this.id}`)
+          .then(() => {
+            this.$router.push({path: `/cryptoPreview/${this.id}`})
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+    }
   }
 }
+
 </script>
 
 <style scoped>
@@ -39,6 +55,7 @@ export default {
   display: inline-block;
   margin-top: 10px;
 }
+
 .crypto-preview:hover {
   background-color: #ccc;
 }
@@ -59,6 +76,7 @@ a {
 .crypto-content {
   padding: 10px;
   text-align: center;
+  cursor: pointer;
 }
 
 </style>

@@ -16,6 +16,7 @@ const routes = [
         component: ErrorPage
     }
 ]
+
 Vue.use(Router)
 
 const router = new Router({

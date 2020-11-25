@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <div>
-      Header with menu
-    </div>
-    <router-view/>
+    <DefaultTemplate>
+      <router-view/>
+    </DefaultTemplate>
   </div>
 </template>
 
@@ -11,9 +10,11 @@
 
 import {getRequest} from "@/common/GetRequest";
 import {mapMutations} from 'vuex'
+import DefaultTemplate from "@/components/templates/default";
 
 export default {
   name: 'App',
+  components: {DefaultTemplate},
   mounted() {
     this.fetchData('https://rest.coinapi.io/v1/exchanges')
         .then((result) => {
@@ -42,5 +43,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+body {
+  margin: 0;
 }
 </style>

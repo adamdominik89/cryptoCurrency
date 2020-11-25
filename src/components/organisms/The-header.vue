@@ -1,14 +1,14 @@
 <template>
   <div class="header-container">
     <header class="the-header">
-      <Burger-icon @toggle="$emit('sidenavToggle')" />
+      <BurgerIcon @toggle="handleToggle"/>
       <div class="logo">
         <router-link :to="{name: 'CurrenciesList'}">Crypto Currency App</router-link>
       </div>
       <div class="spacer"></div>
       <div class="navigation-items">
         <ul class="nav-list">
-          <li class="nav-item"><router-link :to="{name: 'CurrenciesList'}">Main Page</router-link></li>
+          <NavLinks :classFeature="'header-nav-item'"/>
         </ul>
       </div>
     </header>
@@ -17,12 +17,25 @@
 
 <script>
 import BurgerIcon from '../atoms/Burger-icon'
+import {mapGetters, mapMutations} from 'vuex';
+import NavLinks from "@/components/molecules/Nav-links";
 
 export default {
   name: 'TheHeader',
   components: {
+    NavLinks,
     BurgerIcon
+  },
+  computed: {
+    ...mapGetters('Menu', ['getIsMenuOpen'])
+  },
+  methods: {
+    ...mapMutations('Menu', ['setIsMenuOpen']),
+    handleToggle() {
+      this.setIsMenuOpen(!this.getIsMenuOpen)
+    }
   }
+
 };
 </script>
 
@@ -76,18 +89,4 @@ export default {
   display: flex;
 }
 
-.nav-item {
-  margin: 0 10px;
-}
-
-.nav-item a {
-  text-decoration: none;
-  color: white;
-}
-
-.nav-item a:hover,
-.nav-item a:active,
-.nav-item a.nuxt-link-active {
-  color: red;
-}
 </style>

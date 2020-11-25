@@ -9,12 +9,15 @@
 <script>
 
 import {getRequest} from "@/common/GetRequest";
-import {mapMutations} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 import DefaultTemplate from "@/components/templates/default";
 
 export default {
   name: 'App',
   components: {DefaultTemplate},
+  data: () => ({
+    previousWidth: null
+  }),
   mounted() {
     this.fetchData('https://rest.coinapi.io/v1/exchanges')
         .then((result) => {
@@ -25,12 +28,29 @@ export default {
         .catch((error) => {
           console.error(error)
         })
+    window.addEventListener('resize', this.handleMenuState);
   },
-  computed: {},
+  destroyed() {
+    window.removeEventListener('resize', this.handleMenuState);
+  },
+  computed: {
+    ...mapGetters('Menu', [
+      'getIsMenuOpen'
+    ])
+  },
   methods: {
     ...mapMutations('CryptoData', ['setCryptoData', 'setCryptoAssets']),
+    ...mapMutations('Menu', ['setIsMenuOpen']),
     fetchData: async (url) => {
       return getRequest(url)
+    },
+    handleMenuState(value) {
+      const actualScreenWidth = value.target.innerWidth;
+      const mediumDevicesSize = 768;
+      if (this.previousWidth < actualScreenWidth && actualScreenWidth > mediumDevicesSize && this.getIsMenuOpen) {
+        this.setIsMenuOpen(false)
+      }
+      this.previousWidth = value.target.innerWidth;
     }
   }
 }
@@ -44,6 +64,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 body {
   margin: 0;
 }

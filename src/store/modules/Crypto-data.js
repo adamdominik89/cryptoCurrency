@@ -3,7 +3,6 @@ export default {
     state: {
         cryptoExchangesData: [],
         cryptoAssetsData: [],
-        api_key: ''
     },
     getters: {
         getCryptoData: (state) => state.cryptoExchangesData,

@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div v-for="crypto in getDataToDisplay"
-         :key="crypto.id">
-      {{ crypto.name }}
-    </div>
+      <CryptoCard v-for="cryptoCard in getDataToDisplay"
+                  :key="cryptoCard.id"
+                  :title="cryptoCard.name"/>
   </div>
-
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import CryptoCard from "@/components/molecules/Crypto-card";
 
 export default {
   name: 'CurrenciesList',
+  components: {CryptoCard},
   computed: {
     ...mapGetters('CryptoData', ['getCryptoAssets']),
     getDataToDisplay() {

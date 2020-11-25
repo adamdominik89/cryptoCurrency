@@ -25,11 +25,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions('CryptoData', ['fetchSingleCryptoData']),
+    ...mapActions('CryptoData', ['fetchCryptoData']),
     HandleCryptoClick() {
-      this.fetchSingleCryptoData({
+      this.fetchCryptoData({
         url1: `https://rest.coinapi.io/v1/exchangerate/${this.id}`,
-        url2: `https://rest.coinapi.io/v1/assets/icons/32`
+        url2: `https://rest.coinapi.io/v1/assets/icons/32`,
+        url3: `https://rest.coinapi.io/v1/ohlcv/BITSTAMP_SPOT_${this.id}_USD/latest?period_id=1DAY`
       })
           .then(() => {
             this.$router.push({path: `/cryptoPreview/${this.id}`})

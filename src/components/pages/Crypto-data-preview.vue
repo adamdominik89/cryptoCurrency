@@ -1,9 +1,10 @@
 <template>
   <div>
     <div class="header-data-preview">
-      Preview for
       <div class="crypto-name">
-        {{ getData }}
+        <h1>
+          {{ getData }}
+        </h1>
       </div>
       <img :src="getUrlForIcon"/>
     </div>
@@ -76,9 +77,11 @@ export default {
 .go-to-main-page {
   margin: 20px
 }
+
 .crypto-name {
   font-weight: bold;
 }
+
 .header-data-preview {
   margin-top: 20px;
 }

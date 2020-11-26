@@ -3,7 +3,9 @@
     <div class="the-header">
       <BurgerIcon @toggle="handleToggle"/>
       <div class="logo">
+        <Icon icon-name="attach_money" class-feature="dollar-sign"/>
         <router-link :to="{name: 'CurrenciesList'}">Crypto Currency App</router-link>
+        <Icon icon-name="attach_money" class-feature="dollar-sign"/>
       </div>
       <div class="spacer"></div>
       <div class="navigation-items">
@@ -19,10 +21,12 @@
 import BurgerIcon from '../molecules/Burger-icon'
 import {mapGetters, mapMutations} from 'vuex';
 import NavLinks from "@/components/molecules/Nav-links";
+import Icon from "@/components/atoms/icon";
 
 export default {
   name: 'TheHeader',
   components: {
+    Icon,
     NavLinks,
     BurgerIcon
   },
@@ -60,6 +64,8 @@ export default {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
   margin: 0 10px;
   font-size: 1.3rem;
 }

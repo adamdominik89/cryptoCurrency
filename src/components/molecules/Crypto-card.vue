@@ -41,8 +41,10 @@ export default {
   box-shadow: 0 2px 2px #ccc;
   background-color: white;
   width: 80%;
-  display: inline-block;
+  display: flex;
   margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .crypto-preview:hover {

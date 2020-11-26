@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="!getIsDataLoaded">
+    <div v-if="!getIsDataLoaded">
       <div class="loader-icon">
         <ClipLoader
             :loading="true"
@@ -8,13 +8,13 @@
             :size="'80px'"
         />
       </div>
-    </template>
-    <template v-else>
+    </div>
+    <div class="crypto-card-container" v-else>
       <CryptoCard v-for="cryptoCard in getDataToDisplay"
                   :key="cryptoCard.id"
                   :title="cryptoCard.name"
                   :id="cryptoCard.id"/>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -48,5 +48,14 @@ export default {
 .loader-icon {
   margin: 150px auto 0 auto;
   width: 100%;
+}
+.crypto-card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+@media (min-width: 768px) {
+  .crypto-card-container {
+    justify-content: center;
+  }
 }
 </style>

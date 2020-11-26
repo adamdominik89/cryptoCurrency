@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <header class="the-header">
+    <div class="the-header">
       <BurgerIcon @toggle="handleToggle"/>
       <div class="logo">
         <router-link :to="{name: 'CurrenciesList'}">Crypto Currency App</router-link>
@@ -11,7 +11,7 @@
           <NavLinks :classFeature="'header-nav-item'"/>
         </ul>
       </div>
-    </header>
+    </div>
   </div>
 </template>
 
@@ -56,6 +56,7 @@ export default {
   z-index: 100;
   box-sizing: border-box;
   padding: 0 20px;
+  -webkit-backface-visibility: hidden;
 }
 
 .logo {

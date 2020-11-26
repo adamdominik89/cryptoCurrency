@@ -51,7 +51,7 @@ export default {
     handleMenuState(value) {
       const actualScreenWidth = value.target.innerWidth;
       const mediumDevicesSize = 768;
-      if (this.previousWidth < actualScreenWidth && actualScreenWidth > mediumDevicesSize && this.getIsMenuOpen) {
+      if (this.previousWidth < actualScreenWidth && actualScreenWidth >= mediumDevicesSize && this.getIsMenuOpen) {
         this.setIsMenuOpen(false)
       }
       this.previousWidth = value.target.innerWidth;

@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 .header-container {
-  height: 60px;
+  height: 80px;
 }
 
 .the-header {

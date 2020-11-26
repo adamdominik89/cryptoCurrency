@@ -45,6 +45,7 @@ export default {
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
+  justify-content: center;
 }
 
 .crypto-preview:hover {

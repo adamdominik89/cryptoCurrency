@@ -114,7 +114,7 @@ export default {
 <style>
 .single-crypto-rate-preview {
   border-top: 1px solid lightgray;
-  width: 250px;
+  width: 320px;
   margin: 10px auto 0;
 }
 

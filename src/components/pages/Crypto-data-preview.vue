@@ -24,10 +24,11 @@
           </div>
           <img :src="getUrlForIcon"/>
         </div>
-        <div v-for="(singleData, index) in getSingleCryptoData" :key="index" class="single-crypto-rate-preview">
-          <div>Actual rate in {{ singleData.asset_id_quote }}</div>
-          <div>Rate value {{ singleData.rate }}</div>
-          <div>Date when rate was set {{ singleData.time | formatDate }}</div>
+        <div v-for="(singleData, index) in getSingleCryptoData"
+             :key="index"
+             class="single-crypto-rate-preview"
+        >
+          <RateDataCard :rate-data="singleData"/>
         </div>
         <HistoricalData/>
         <div class="go-to-main-page">
@@ -41,12 +42,12 @@
 <script>
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 import HistoricalData from "@/components/organisms/Historical-data";
-import {months} from "@/macros/months";
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+import RateDataCard from "@/components/molecules/Rate-data-card";
 
 export default {
   name: 'CryptoDataPreview',
-  components: {HistoricalData, ClipLoader},
+  components: {RateDataCard, HistoricalData, ClipLoader},
   data: () => ({
     errorHasOccured: false
   }),
@@ -83,25 +84,15 @@ export default {
     ...mapGetters('CryptoData', ['getSingleCryptoData', 'getNameById', 'getCryptoIcons']),
     ...mapGetters('UserInteraction', ['getIsDataLoaded']),
     getData() {
-      let result = this.getNameById(this.getId)
+      const result = this.getNameById(this.getId)
       return result && result.name ? result.name : ''
     },
     getId() {
       return this.$route.params.id
     },
     getUrlForIcon() {
-      let result = this.getCryptoIcons.find(element => this.$route.params.id === element.asset_id)
+      const result = this.getCryptoIcons.find(element => this.$route.params.id === element.asset_id)
       return result && result.url ? result.url : ''
-    }
-  },
-  filters: {
-    formatDate(inputDate) {
-      const date = new Date(inputDate);
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDate();
-      const formattedDate = day + ". " + months[month] + " " + year;
-      return formattedDate;
     }
   },
   methods: {

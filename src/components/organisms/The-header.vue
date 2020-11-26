@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import BurgerIcon from '../atoms/Burger-icon'
+import BurgerIcon from '../molecules/Burger-icon'
 import {mapGetters, mapMutations} from 'vuex';
 import NavLinks from "@/components/molecules/Nav-links";
 

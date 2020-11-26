@@ -1,13 +1,7 @@
 <template>
   <div>
     <div v-if="!getIsDataLoaded">
-      <div class="loader-icon">
-        <ClipLoader
-            :loading="true"
-            :color="'#e01010'"
-            :size="'80px'"
-        />
-      </div>
+      <CustomisedLoaderIcon :is-visible="!getIsDataLoaded"/>
     </div>
     <div class="crypto-card-container" v-else>
       <CryptoCard v-for="cryptoCard in getDataToDisplay"
@@ -21,13 +15,13 @@
 <script>
 import {mapGetters} from 'vuex'
 import CryptoCard from "@/components/molecules/Crypto-card";
-import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+import CustomisedLoaderIcon from "@/components/molecules/Customised-loader-icon";
 
 export default {
   name: 'CurrenciesList',
   components: {
+    CustomisedLoaderIcon,
     CryptoCard,
-    ClipLoader
   },
   computed: {
     ...mapGetters('CryptoData', ['getCryptoAssets']),
@@ -45,14 +39,12 @@ export default {
 </script>
 
 <style>
-.loader-icon {
-  margin: 150px auto 0 auto;
-  width: 100%;
-}
+
 .crypto-card-container {
   display: flex;
   flex-wrap: wrap;
 }
+
 @media (min-width: 768px) {
   .crypto-card-container {
     justify-content: center;

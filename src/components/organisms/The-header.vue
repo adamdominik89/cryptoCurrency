@@ -21,7 +21,7 @@
 import BurgerIcon from '../molecules/Burger-icon'
 import {mapGetters, mapMutations} from 'vuex';
 import NavLinks from "@/components/molecules/Nav-links";
-import Icon from "@/components/atoms/icon";
+import Icon from "@/components/atoms/Icon";
 
 export default {
   name: 'TheHeader',

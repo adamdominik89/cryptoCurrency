@@ -1,13 +1,7 @@
 <template>
   <div>
     <div v-if="!getIsDataLoaded">
-      <div class="loader-icon">
-        <ClipLoader
-            :loading="true"
-            :color="'#e01010'"
-            :size="'80px'"
-        />
-      </div>
+      <CustomisedLoaderIcon :is-visible="!getIsDataLoaded"/>
     </div>
     <div v-else>
       <div v-show="errorHasOccured">
@@ -32,7 +26,7 @@
         </div>
         <HistoricalData/>
         <div class="go-to-main-page">
-          <router-link to="/">Go to all Crypto preview</router-link>
+          <router-link to="/">Go to Main Page</router-link>
         </div>
       </div>
     </div>
@@ -42,13 +36,17 @@
 <script>
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 import HistoricalData from "@/components/organisms/Historical-data";
-import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 import RateDataCard from "@/components/molecules/Rate-data-card";
 import store from '../../store/index'
+import CustomisedLoaderIcon from "@/components/molecules/Customised-loader-icon";
 
 export default {
   name: 'CryptoDataPreview',
-  components: {RateDataCard, HistoricalData, ClipLoader},
+  components: {
+    CustomisedLoaderIcon,
+    RateDataCard,
+    HistoricalData
+  },
   data: () => ({
     errorHasOccured: false
   }),
@@ -82,9 +80,9 @@ export default {
           .catch((error) => {
             this.onErrorHandle(error)
           })
-      .finally(() => {
-        this.setIsDataLoaded(true)
-      })
+          .finally(() => {
+            this.setIsDataLoaded(true)
+          })
     }
   },
   computed: {

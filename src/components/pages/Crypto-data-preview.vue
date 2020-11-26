@@ -44,6 +44,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 import HistoricalData from "@/components/organisms/Historical-data";
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 import RateDataCard from "@/components/molecules/Rate-data-card";
+import store from '../../store/index'
 
 export default {
   name: 'CryptoDataPreview',
@@ -51,34 +52,40 @@ export default {
   data: () => ({
     errorHasOccured: false
   }),
+  beforeCreate() {
+    store.commit('UserInteraction/setIsDataLoaded', false)
+  },
   mounted() {
-    this.setIsDataLoaded(false)
+    const urls = {
+      exchangeRates: `https://rest.coinapi.io/v1/exchangerate/${this.getId}`,
+      historicalValues: `https://rest.coinapi.io/v1/ohlcv/${this.getId}/USD/latest?period_id=1DAY`,
+      icons: `https://rest.coinapi.io/v1/assets/icons/32`,
+    }
     if (this.getCryptoIcons.length === 0) {
       this.fetchCryptoData({
-        url1: `https://rest.coinapi.io/v1/exchangerate/${this.getId}`,
-        url2: `https://rest.coinapi.io/v1/assets/icons/32`,
-        url3: `https://rest.coinapi.io/v1/ohlcv/${this.getId}/USD/latest?period_id=1DAY`
+        url1: urls.exchangeRates,
+        url2: urls.historicalValues,
+        url3: urls.icons
       })
           .catch((error) => {
-            console.error(error)
-            this.errorHasOccured = true
+            this.onErrorHandle(error)
+          })
+          .finally(() => {
             this.setIsDataLoaded(true)
           })
     } else {
       this.fetchExchangeRateAndHistoricalData({
-            url1: `https://rest.coinapi.io/v1/exchangerate/${this.getId}`,
-            url2: `https://rest.coinapi.io/v1/ohlcv/${this.getId}/USD/latest?period_id=1DAY`
+            url1: urls.exchangeRates,
+            url2: urls.historicalValues
           }
       )
           .catch((error) => {
-            console.error(error)
-            this.errorHasOccured = true
-            this.setIsDataLoaded(true)
+            this.onErrorHandle(error)
           })
+      .finally(() => {
+        this.setIsDataLoaded(true)
+      })
     }
-    this.errorHasOccured = false
-    this.setIsDataLoaded(true)
-
   },
   computed: {
     ...mapGetters('CryptoData', ['getSingleCryptoData', 'getNameById', 'getCryptoIcons']),
@@ -97,7 +104,12 @@ export default {
   },
   methods: {
     ...mapMutations('UserInteraction', ['setIsDataLoaded']),
-    ...mapActions('CryptoData', ['fetchCryptoData', 'fetchExchangeRateAndHistoricalData'])
+    ...mapActions('CryptoData', ['fetchCryptoData', 'fetchExchangeRateAndHistoricalData']),
+    onErrorHandle(error) {
+      console.error(error)
+      this.errorHasOccured = true
+      this.setIsDataLoaded(true)
+    }
   }
 }
 

@@ -35,24 +35,13 @@ export default {
         }
     },
     actions: {
-        fetchCryptoData: ({commit}, {url1, url2, url3}) => {
-            return getRequest(url1)
-                .then((result) => {
-                    const value = result.rates.filter(element => element.asset_id_quote === 'USD' || element.asset_id_quote === 'EUR')
-                    commit('setSingleCryptoData', value)
-                    return value
-                })
-                .then(() => {
-                    return getRequest(url2)
-                })
-                .then((result) => {
-                    return commit('setCryptoIcons', result)
-                })
+        fetchCryptoData: ({commit, dispatch}, {url1, url2, url3}) => {
+            return dispatch('fetchExchangeRateAndHistoricalData', {url1, url2})
                 .then(() => {
                     return getRequest(url3)
                 })
-                .then((historicalData) => {
-                    return commit('setHistoricalData', historicalData)
+                .then((result) => {
+                    return commit('setCryptoIcons', result)
                 })
                 .catch(e => {
                     throw new Error(e)
@@ -78,3 +67,4 @@ export default {
         }
     }
 }
+

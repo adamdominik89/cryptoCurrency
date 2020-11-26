@@ -7,7 +7,7 @@
       <template v-show="!errorHasOccured">
         <div class="header-data-preview">
           <div class="crypto-name">
-              {{ getData }}
+            {{ getData }}
           </div>
           <img :src="getUrlForIcon" :height="32" :width="32"/>
         </div>
@@ -52,6 +52,9 @@ export default {
     store.commit('UserInteraction/setIsDataLoaded', false)
   },
   created() {
+    if (this.getData === '') {
+      this.$router.push({name: 'ErrorPage'})
+    }
     const urls = {
       exchangeRates: `https://rest.coinapi.io/v1/exchangerate/${this.getId}`,
       historicalValues: `https://rest.coinapi.io/v1/ohlcv/${this.getId}/USD/latest?period_id=1DAY`,

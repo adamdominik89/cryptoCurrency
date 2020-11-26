@@ -55,7 +55,7 @@ export default {
   beforeCreate() {
     store.commit('UserInteraction/setIsDataLoaded', false)
   },
-  mounted() {
+  created() {
     const urls = {
       exchangeRates: `https://rest.coinapi.io/v1/exchangerate/${this.getId}`,
       historicalValues: `https://rest.coinapi.io/v1/ohlcv/${this.getId}/USD/latest?period_id=1DAY`,

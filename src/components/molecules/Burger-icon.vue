@@ -9,6 +9,13 @@
   </div>
 </template>
 
+<script>
+import Icon from "@/components/atoms/icon";
+
+export default {
+  components: {Icon}
+}
+</script>
 
 <style scoped>
 .drawer-toggle {
@@ -27,11 +34,3 @@
 }
 
 </style>
-
-<script>
-import Icon from "@/components/atoms/icon";
-
-export default {
-  components: {Icon}
-}
-</script>

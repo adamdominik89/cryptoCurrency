@@ -5,7 +5,9 @@
         :show="getIsMenuOpen"
         @close="handleToggle"
     />
-    <slot/>
+    <div class="content-wrapper">
+      <slot/>
+    </div>
   </div>
 </template>
 <script>
@@ -33,3 +35,8 @@ export default {
 
 </script>
 
+<style>
+.content-wrapper {
+  margin-top: 60px;
+}
+</style>

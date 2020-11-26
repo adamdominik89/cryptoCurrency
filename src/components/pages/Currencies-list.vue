@@ -3,7 +3,8 @@
     <div v-if="!getIsDataLoaded">
       <CustomisedLoaderIcon :is-visible="!getIsDataLoaded"/>
     </div>
-    <div class="crypto-card-container" v-else>
+    <div v-else
+         class="crypto-card-container">
       <CryptoCard v-for="cryptoCard in getDataToDisplay"
                   :key="cryptoCard.id"
                   :title="cryptoCard.name"

@@ -49,6 +49,7 @@ export default {
 
 .crypto-preview:hover {
   background-color: #ccc;
+  color: red;
 }
 
 a {

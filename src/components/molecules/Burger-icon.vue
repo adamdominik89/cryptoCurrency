@@ -2,9 +2,10 @@
   <div
       class="drawer-toggle"
       @click="$emit('toggle')">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
+    <Icon
+        icon-name="menu"
+        class-feature="burger-icon"
+    />
   </div>
 </template>
 
@@ -25,10 +26,17 @@
   }
 }
 
-.drawer-toggle .bar {
+.drawer-toggle {
   width: 90%;
   height: 2px;
   background-color: white;
 }
 </style>
 
+<script>
+import Icon from "@/components/atoms/icon";
+
+export default {
+  components: {Icon}
+}
+</script>

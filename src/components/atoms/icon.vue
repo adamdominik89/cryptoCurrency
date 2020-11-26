@@ -20,5 +20,8 @@ export default {
   color: gold;
   font-size: 35px;
 }
+.burger-icon {
+  color: white;
+}
 
 </style>

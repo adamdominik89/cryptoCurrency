@@ -10,7 +10,7 @@
 
 <script>
 import moment from "moment";
-import {months} from "@/macros/months";
+import {getDate} from "@/common/filters/date";
 
 export default {
   name: 'HistoricalDataCard',
@@ -19,14 +19,10 @@ export default {
   },
   filters: {
     formatDateAndTime(inputDate) {
-      const date = new Date(inputDate);
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDate();
+      const parsedDate = getDate(inputDate)
       const momentDate = moment(inputDate);
       const time = momentDate.format('HH:mm')
-      const formattedDate = day + ". " + months[month] + " " + year + ' | ' + time;
-      return formattedDate;
+      return parsedDate + ' | ' + time;
     }
   }
 }

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {months} from "@/macros/months";
+import {getDate} from "@/common/filters/date";
 
 export default {
   name: 'RateDataCard',
@@ -16,12 +16,7 @@ export default {
   },
   filters: {
     formatDate(inputDate) {
-      const date = new Date(inputDate);
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDate();
-      const formattedDate = day + ". " + months[month] + " " + year;
-      return formattedDate;
+      return getDate(inputDate);
     }
   },
 }

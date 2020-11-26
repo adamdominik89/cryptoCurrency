@@ -26,11 +26,6 @@
   }
 }
 
-.drawer-toggle {
-  width: 90%;
-  height: 2px;
-  background-color: white;
-}
 </style>
 
 <script>

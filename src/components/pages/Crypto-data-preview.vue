@@ -1,22 +1,15 @@
 <template>
-  <div>
+  <div class="crypto-data-preview-container">
     <div v-if="!getIsDataLoaded">
       <CustomisedLoaderIcon :is-visible="!getIsDataLoaded"/>
     </div>
     <div v-else>
-      <div v-show="errorHasOccured">
-        <div>
-          Fetching data failed please refresh the page or check your URL
-        </div>
-      </div>
-      <div v-show="!errorHasOccured">
+      <template v-show="!errorHasOccured">
         <div class="header-data-preview">
           <div class="crypto-name">
-            <h1>
               {{ getData }}
-            </h1>
           </div>
-          <img :src="getUrlForIcon"/>
+          <img :src="getUrlForIcon" :height="32" :width="32"/>
         </div>
         <div v-for="(singleData, index) in getSingleCryptoData"
              :key="index"
@@ -27,6 +20,11 @@
         <HistoricalData/>
         <div class="go-to-main-page">
           <router-link to="/">Go to Main Page</router-link>
+        </div>
+      </template>
+      <div v-show="errorHasOccured">
+        <div>
+          Fetching data failed please refresh the page or check your URL
         </div>
       </div>
     </div>
@@ -116,8 +114,14 @@ export default {
 <style>
 .single-crypto-rate-preview {
   border-top: 1px solid lightgray;
-  width: 400px;
+  width: 250px;
   margin: 10px auto 0;
+}
+
+@media (min-width: 768px) {
+  .single-crypto-rate-preview {
+    width: 400px;
+  }
 }
 
 .go-to-main-page {
@@ -126,9 +130,16 @@ export default {
 
 .crypto-name {
   font-weight: bold;
+  display: flex;
+  justify-content: space-around;
 }
 
 .header-data-preview {
-  margin-top: 20px;
+  margin-top: 0;
+}
+
+.crypto-data-preview-container {
+  display: flex;
+  justify-content: space-around;
 }
 </style>

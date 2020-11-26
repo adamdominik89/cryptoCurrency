@@ -34,3 +34,8 @@ export default {
 }
 
 </script>
+<style>
+.content-wrapper{
+  padding-top: 20px;
+}
+</style>

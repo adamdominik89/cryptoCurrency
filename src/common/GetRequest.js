@@ -5,7 +5,7 @@ export const getRequest = async (url) => {
             {
                 method: 'GET',
                 headers: {
-                    'X-CoinAPI-Key': '3A8427E2-8130-450C-99A5-4007E22DDD9A'
+                    'X-CoinAPI-Key': 'BAB856CA-D533-49B5-B3DE-62F0A79EC242'
                 }
             }
         )

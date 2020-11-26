@@ -1,34 +1,57 @@
 <template>
   <div>
-    <div class="header-data-preview">
-      <div class="crypto-name">
-        <h1>
-          {{ getData }}
-        </h1>
+    <div v-if="!getIsDataLoaded">
+      <div class="loader-icon">
+        <ClipLoader
+            :loading="true"
+            :color="'#e01010'"
+            :size="'80px'"
+        />
       </div>
-      <img :src="getUrlForIcon"/>
     </div>
-    <div v-for="(singleData, index) in getSingleCryptoData" :key="index" class="single-crypto-rate-preview">
-      <div>Actual rate in {{ singleData.asset_id_quote }}</div>
-      <div>Rate value {{ singleData.rate }}</div>
-      <div>Date when rate was set {{ singleData.time | formatDate }}</div>
-    </div>
-    <HistoricalData/>
-    <div class="go-to-main-page">
-      <router-link to="/">Go to all Crypto preview</router-link>
+    <div v-else>
+      <div v-show="errorHasOccured">
+        <div>
+          Fetching data failed please refresh the page or check your URL
+        </div>
+      </div>
+      <div v-show="!errorHasOccured">
+        <div class="header-data-preview">
+          <div class="crypto-name">
+            <h1>
+              {{ getData }}
+            </h1>
+          </div>
+          <img :src="getUrlForIcon"/>
+        </div>
+        <div v-for="(singleData, index) in getSingleCryptoData" :key="index" class="single-crypto-rate-preview">
+          <div>Actual rate in {{ singleData.asset_id_quote }}</div>
+          <div>Rate value {{ singleData.rate }}</div>
+          <div>Date when rate was set {{ singleData.time | formatDate }}</div>
+        </div>
+        <HistoricalData/>
+        <div class="go-to-main-page">
+          <router-link to="/">Go to all Crypto preview</router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 import HistoricalData from "@/components/organisms/Historical-data";
 import {months} from "@/macros/months";
+import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 
 export default {
   name: 'CryptoDataPreview',
-  components: {HistoricalData},
+  components: {HistoricalData, ClipLoader},
+  data: () => ({
+    errorHasOccured: false
+  }),
   mounted() {
+    this.setIsDataLoaded(false)
     if (this.getCryptoIcons.length === 0) {
       this.fetchCryptoData({
         url1: `https://rest.coinapi.io/v1/exchangerate/${this.getId}`,
@@ -37,12 +60,28 @@ export default {
       })
           .catch((error) => {
             console.error(error)
+            this.errorHasOccured = true
+            this.setIsDataLoaded(true)
+          })
+    } else {
+      this.fetchExchangeRateAndHistoricalData({
+            url1: `https://rest.coinapi.io/v1/exchangerate/${this.getId}`,
+            url2: `https://rest.coinapi.io/v1/ohlcv/${this.getId}/USD/latest?period_id=1DAY`
+          }
+      )
+          .catch((error) => {
+            console.error(error)
+            this.errorHasOccured = true
+            this.setIsDataLoaded(true)
           })
     }
-    //here we need to fetch data
+    this.errorHasOccured = false
+    this.setIsDataLoaded(true)
+
   },
   computed: {
     ...mapGetters('CryptoData', ['getSingleCryptoData', 'getNameById', 'getCryptoIcons']),
+    ...mapGetters('UserInteraction', ['getIsDataLoaded']),
     getData() {
       let result = this.getNameById(this.getId)
       return result && result.name ? result.name : ''
@@ -66,7 +105,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('CryptoData', ['fetchCryptoData'])
+    ...mapMutations('UserInteraction', ['setIsDataLoaded']),
+    ...mapActions('CryptoData', ['fetchCryptoData', 'fetchExchangeRateAndHistoricalData'])
   }
 }
 

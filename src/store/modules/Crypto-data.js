@@ -54,6 +54,27 @@ export default {
                 .then((historicalData) => {
                     return commit('setHistoricalData', historicalData)
                 })
+                .catch(e => {
+                    throw new Error(e)
+                })
+        },
+        fetchExchangeRateAndHistoricalData: ({commit}, {url1, url2}) => {
+            return getRequest(url1)
+                .then((result) => {
+                    const value = result.rates.filter(element => element.asset_id_quote === 'USD' || element.asset_id_quote === 'EUR')
+                    commit('setSingleCryptoData', value)
+                    return value
+                })
+                .then(() => {
+                    return getRequest(url2)
+                })
+                .then((historicalData) => {
+                    commit('setHistoricalData', historicalData)
+                    return historicalData
+                })
+                .catch(e => {
+                    throw new Error(e)
+                })
         }
     }
 }

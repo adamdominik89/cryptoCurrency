@@ -27,17 +27,7 @@ export default {
   methods: {
     ...mapActions('CryptoData', ['fetchCryptoData']),
     HandleCryptoClick() {
-      this.fetchCryptoData({
-        url1: `https://rest.coinapi.io/v1/exchangerate/${this.id}`,
-        url2: `https://rest.coinapi.io/v1/assets/icons/32`,
-        url3: `https://rest.coinapi.io/v1/ohlcv/${this.id}/USD/latest?period_id=1DAY`
-      })
-          .then(() => {
             this.$router.push({path: `/cryptoPreview/${this.id}`})
-          })
-          .catch((error) => {
-            console.error(error)
-          })
     }
   }
 }
